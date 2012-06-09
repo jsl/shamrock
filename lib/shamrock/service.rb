@@ -24,5 +24,11 @@ module Shamrock
     def stop
       Thread.kill(@thread)
     end
+
+    private
+
+    def server_name
+      @rack_app.class.name
+    end
   end
 end

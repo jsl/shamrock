@@ -39,6 +39,7 @@ Thanks to Mike Barinek for writing up an example of this code that used Threads 
 the rack application - this gem draws from code in his blog post at
 http://pivotallabs.com/users/mbarinek/blog/articles/2043-testing-ruby-services-without-mocks
 
+Thanks to Kurt Eldridge (http://github.com/truk) for pair programming on a test problem with Threads.
 
 ## Contributing
 
