@@ -17,14 +17,14 @@ describe Shamrock::Service do
     end
   end
 
-  # In-line the service startup for this test
-  class Shamrock::Service::Thread
-    def initialize(&block)
-      yield
-    end
-  end
-
   describe "#start" do
+    # In-line the service startup for this test
+    class Shamrock::Service::Thread
+      def initialize(&block)
+        yield
+      end
+    end
+
     it "should start the server" do
       monitor = mock('monitor', wait_until_ready: true)
       monitor_class = mock('monitor class', new: monitor)
