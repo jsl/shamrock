@@ -1,5 +1,6 @@
 module Shamrock
   class Service
+
     attr_reader :port, :url
 
     def initialize(rack_app,
@@ -10,7 +11,7 @@ module Shamrock
       @handler  = handler
       @port     = Port.new
       @url      = "http://localhost:#{port.number}"
-      @monitor  = monitor.new(url)
+      @monitor  = monitor.new(Shamrock::Http.new(url))
     end
 
     def start
