@@ -5,13 +5,13 @@ module Shamrock
 
     def initialize(rack_app,
                    handler = Rack::Handler::WEBrick,
-                   monitor = Shamrock::Monitor)
+                   monitor = Monitor)
 
       @rack_app = rack_app
       @handler  = handler
       @port     = Port.new
       @url      = "http://localhost:#{port.number}"
-      @monitor  = monitor.new(Shamrock::Http.new(url))
+      @monitor  = monitor.new(Http.new(url))
     end
 
     def start
