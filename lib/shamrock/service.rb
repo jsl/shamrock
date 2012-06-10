@@ -3,20 +3,28 @@ module Shamrock
 
     attr_reader :port, :url
 
-    def initialize(rack_app,
-                   handler = Rack::Handler::WEBrick,
-                   monitor = Monitor)
+    PORT_RANGE = 9220..9260
 
+    DEFAULT_OPTIONS = {
+      handler: Rack::Handler::WEBrick,
+      monitor: Shamrock::Monitor
+    }
+
+    def initialize(rack_app, options = {})
       @rack_app = rack_app
-      @handler  = handler
-      @port     = Port.new
-      @url      = "http://localhost:#{port.number}"
-      @monitor  = monitor.new(Http.new(url))
+
+      options   = DEFAULT_OPTIONS.merge(options)
+
+      @handler  = options[:handler]
+
+      @port     = options[:port] || random_port
+      @url      = "http://localhost:#{port}"
+      @monitor  = options[:monitor].new(Http.new(url))
     end
 
     def start
       @thread = Thread.new do
-        @handler.run(@rack_app, Port: port.number)
+        @handler.run(@rack_app, Port: port)
       end
 
       @monitor.wait_until_ready
@@ -27,6 +35,10 @@ module Shamrock
     end
 
     private
+
+    def random_port
+      Random.rand(PORT_RANGE)
+    end
 
     def server_name
       @rack_app.class.name
