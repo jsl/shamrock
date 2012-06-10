@@ -1,5 +1,3 @@
-require 'logger'
-
 module Shamrock
   class Service
 
@@ -18,7 +16,6 @@ module Shamrock
       options   = DEFAULT_OPTIONS.merge(options)
 
       @handler  = options[:handler]
-      @logger   = logger
 
       @port     = options[:port] || random_port
       @url      = "http://localhost:#{port}"
@@ -27,7 +24,7 @@ module Shamrock
 
     def start
       @thread = Thread.new do
-        @handler.run(@rack_app, Port: port, Logger: @logger)
+        @handler.run(@rack_app, Port: port)
       end
 
       @monitor.wait_until_ready
@@ -38,10 +35,6 @@ module Shamrock
     end
 
     private
-
-    def logger
-      defined? Rails ? Rails.logger : Logger.new(STDOUT)
-    end
 
     def random_port
       Random.rand(PORT_RANGE)

@@ -18,20 +18,13 @@ describe Shamrock::Service do
   end
 
   describe "#start" do
-    # In-line the service startup for this test
-    class Shamrock::Service::Thread
-      def initialize(&block)
-        yield
-      end
-    end
-
     it "should start the server" do
       monitor = mock('monitor', wait_until_ready: true)
       monitor_class = mock('monitor class', new: monitor)
 
       handler = mock('handler')
       service = Shamrock::Service.new(@rack_app, handler: handler, monitor: monitor_class)
-      handler.should_receive(:run).with(@rack_app, Port: service.port, Logger: anything)
+      handler.should_receive(:run).with(@rack_app, Port: service.port)
       service.start
     end
 

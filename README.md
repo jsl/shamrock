@@ -22,7 +22,7 @@ You can then easily start the stub service either for the spec examples that nee
 globally in your spec_helper file. You can replace the Proc below with any Rack application.
 In some cases, we use Sinatra for stub services.
 
-my_rack_app = proc {|env| [200, {"Content-Type" => "text/html"}, "Hello Rack!"]}
+my_rack_app = proc {|env| [200, {"Content-Type" => "text/html"}, ["Hello Rack!"]]}
 @service = Shamrock::Service.new(my_rack_app)
 @service.start
 
