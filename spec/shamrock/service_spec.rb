@@ -31,7 +31,7 @@ describe Shamrock::Service do
 
       handler = mock('handler')
       service = Shamrock::Service.new(@rack_app, handler: handler, monitor: monitor_class)
-      handler.should_receive(:run).with(@rack_app, Port: service.port)
+      handler.should_receive(:run).with(@rack_app, Port: service.port, Logger: anything)
       service.start
     end
 
