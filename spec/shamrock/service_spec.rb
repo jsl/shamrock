@@ -28,6 +28,16 @@ describe Shamrock::Service do
       service.start
     end
 
+    it "should start the server with custom handler options" do
+      monitor = mock('monitor', wait_until_ready: true)
+      monitor_class = mock('monitor class', new: monitor)
+
+      handler = mock('handler')
+      service = Shamrock::Service.new(@rack_app, handler: handler, monitor: monitor_class, foo: 'bar')
+      handler.should_receive(:run).with(@rack_app, Port: service.port, foo: 'bar')
+      service.start
+    end
+
     it "should wait for the server to become available" do
       monitor = mock('monitor')
       monitor_class = mock('monitor class', new: monitor)
