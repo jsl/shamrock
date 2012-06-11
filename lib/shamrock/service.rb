@@ -11,18 +11,18 @@ module Shamrock
     def initialize(rack_app, options = {})
       @rack_app = rack_app
 
-      options   = DEFAULT_OPTIONS.merge(options)
+      @options  = DEFAULT_OPTIONS.merge(options)
 
-      @handler  = options[:handler]
+      @handler  = @options.delete(:handler)
 
-      @port     = options[:port] || find_available_port
+      @port     = @options.delete(:port) || find_available_port
       @url      = "http://localhost:#{port}"
-      @monitor  = options[:monitor].new(Http.new(url))
+      @monitor  = @options.delete(:monitor).new(Http.new(url))
     end
 
     def start
       @thread = Thread.new do
-        @handler.run(@rack_app, Port: port)
+        @handler.run(@rack_app, @options.merge(Port: port))
       end
 
       @monitor.wait_until_ready
