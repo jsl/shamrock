@@ -11,7 +11,7 @@ describe Shamrock::Service do
       service.port.should == 8080
     end
 
-    it "should assign a random port of none is given to initializer" do
+    it "should assign an available port if none is given to initializer" do
       service = Shamrock::Service.new(@rack_app)
       service.port.should_not be_nil
     end

@@ -3,8 +3,6 @@ module Shamrock
 
     attr_reader :port, :url
 
-    PORT_RANGE = 9220..9260
-
     DEFAULT_OPTIONS = {
       handler: Rack::Handler::WEBrick,
       monitor: Shamrock::Monitor
@@ -17,7 +15,7 @@ module Shamrock
 
       @handler  = options[:handler]
 
-      @port     = options[:port] || random_port
+      @port     = options[:port] || find_available_port
       @url      = "http://localhost:#{port}"
       @monitor  = options[:monitor].new(Http.new(url))
     end
@@ -36,8 +34,11 @@ module Shamrock
 
     private
 
-    def random_port
-      Random.rand(PORT_RANGE)
+    def find_available_port
+      server = TCPServer.new('127.0.0.1', 0)
+      server.addr[1]
+    ensure
+      server.close if server
     end
 
     def server_name
