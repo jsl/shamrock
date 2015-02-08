@@ -25,6 +25,7 @@ In some cases, we use Sinatra for stub services.
     my_rack_app = proc {|env| [200, {"Content-Type" => "text/html"}, ["Hello Rack!"]]}
     @service = Shamrock::Service.new(my_rack_app)
     @service.start
+    @service.uri    # => #<URI::HTTP http://localhost:54321>
 
 After you are done with the service:
 

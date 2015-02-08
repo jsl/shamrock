@@ -16,7 +16,7 @@ module Shamrock
       @handler  = @options.delete(:handler)
 
       @port     = @options.delete(:port) || find_available_port
-      @uri      = "http://localhost:#{port}"
+      @uri      = URI("http://localhost:#{port}")
       @monitor  = @options.delete(:monitor).new(Http.new(uri))
     end
 
