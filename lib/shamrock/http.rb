@@ -5,8 +5,8 @@ module Shamrock
 
     attr_reader :uri
 
-    def initialize(url)
-      @uri = URI.parse(url)
+    def initialize(uri)
+      @uri = URI(uri)
     end
 
     def ready?
