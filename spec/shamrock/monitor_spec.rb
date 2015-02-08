@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Shamrock::Monitor do
   describe "#wait_until_ready" do
-    it "should check to see if the given url is available" do
+    it "should check to see if the given uri is available" do
       http = mock('http')
       http.should_receive(:ready?).and_return(true)
 

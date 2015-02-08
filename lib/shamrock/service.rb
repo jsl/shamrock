@@ -1,7 +1,7 @@
 module Shamrock
   class Service
 
-    attr_reader :port, :url
+    attr_reader :port, :uri
 
     DEFAULT_OPTIONS = {
       handler: Rack::Handler::WEBrick,
@@ -16,8 +16,8 @@ module Shamrock
       @handler  = @options.delete(:handler)
 
       @port     = @options.delete(:port) || find_available_port
-      @url      = "http://localhost:#{port}"
-      @monitor  = @options.delete(:monitor).new(Http.new(url))
+      @uri      = URI("http://localhost:#{port}")
+      @monitor  = @options.delete(:monitor).new(Http.new(uri))
     end
 
     def start
