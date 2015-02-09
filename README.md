@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jsl/shamrock.svg?branch=master)](https://travis-ci.org/jsl/shamrock)
+
 # Shamrock
 
 Makes setting up stub services easy.
